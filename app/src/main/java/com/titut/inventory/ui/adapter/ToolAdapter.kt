@@ -10,9 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.Tool
+import com.titut.inventory.db.entity.ToolsWithFriends
 
 class ToolAdapter(val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<ToolAdapter.ToolHolder>() {
-    private var tools: List<Tool> = ArrayList()
+    private var tools: List<ToolsWithFriends> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToolHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -29,7 +30,7 @@ class ToolAdapter(val itemClickListener: OnItemClickListener) : RecyclerView.Ada
         return tools.size
     }
 
-    fun setTools(tools: List<Tool>) {
+    fun setTools(tools: List<ToolsWithFriends>) {
         this.tools = tools
         notifyDataSetChanged()
     }
@@ -40,19 +41,19 @@ class ToolAdapter(val itemClickListener: OnItemClickListener) : RecyclerView.Ada
         var tvLoanStatus: TextView = itemView.findViewById(R.id.tvLoan)
         var tvInventory: TextView = itemView.findViewById(R.id.tvInventory)
 
-        fun bind(tool: Tool, clickListener: OnItemClickListener) {
-            tvToolName.text = tool.name
-            ivToolImage.setImageDrawable(ContextCompat.getDrawable(ivToolImage.context, tool.image))
-            tvLoanStatus.text = "Inventory: ${tool.quantity}"
-            tvInventory.text = "On Loan: 4"
+        fun bind(toolWithFriends: ToolsWithFriends, clickListener: OnItemClickListener) {
+            tvToolName.text = toolWithFriends.tool.name
+            ivToolImage.setImageDrawable(ContextCompat.getDrawable(ivToolImage.context, toolWithFriends.tool.image))
+            tvLoanStatus.text =  "On Loan: ${toolWithFriends.friends.size}"
+            tvInventory.text = "Total Items: ${toolWithFriends.tool.quantity}"
 
             itemView.setOnClickListener {
-                clickListener.onItemClicked(tool)
+                clickListener.onItemClicked(toolWithFriends)
             }
         }
     }
 }
 
 interface OnItemClickListener{
-    fun onItemClicked(tool: Tool)
+    fun onItemClicked(tool: ToolsWithFriends)
 }

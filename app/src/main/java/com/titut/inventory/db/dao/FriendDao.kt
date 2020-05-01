@@ -14,6 +14,6 @@ interface FriendDao {
     @Insert
     fun insertAll(friends: List<Friend>)
 
-    @Query("SELECT * FROM friends_table")
+    @Query("SELECT * FROM Friend")
     fun getAllFriends(): LiveData<List<Friend>>
 }

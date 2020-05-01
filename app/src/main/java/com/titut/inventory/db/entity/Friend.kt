@@ -2,13 +2,12 @@ package com.titut.inventory.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.titut.inventory.R
 
-@Entity(tableName = "friends_table")
+@Entity
 data class Friend(
     var name: String,
     var image: Int
 ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    var friendId: Long = 0
 }

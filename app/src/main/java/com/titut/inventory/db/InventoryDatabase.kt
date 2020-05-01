@@ -12,10 +12,11 @@ import com.titut.inventory.db.dao.FriendDao
 import com.titut.inventory.db.dao.ToolDao
 import com.titut.inventory.db.entity.Friend
 import com.titut.inventory.db.entity.Tool
+import com.titut.inventory.db.entity.ToolFriendCrossRef
 import java.util.concurrent.Executors
 
 
-@Database(entities = [Tool::class, Friend::class], version = 1)
+@Database(entities = [Tool::class, Friend::class,  ToolFriendCrossRef::class], version = 1)
 abstract class InventoryDatabase : RoomDatabase() {
 
     abstract fun toolDao(): ToolDao
@@ -46,6 +47,7 @@ abstract class InventoryDatabase : RoomDatabase() {
                 Executors.newSingleThreadScheduledExecutor().execute(Runnable {
                     instance?.friendDao()?.insertAll(preloadFriendData())
                     instance?.toolDao()?.insertAll(preloadToolsData())
+                    instance?.toolDao()?.insertToolWithFriend(ToolFriendCrossRef(100,101))
                 })
             }
         }

@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.Friend
-import com.titut.inventory.db.entity.Tool
+import com.titut.inventory.db.entity.ToolFriendCrossRef
+import com.titut.inventory.db.entity.ToolsWithFriends
 import com.titut.inventory.ui.adapter.OnItemClickListener
 import com.titut.inventory.ui.adapter.ToolAdapter
 import com.titut.inventory.ui.friends.FriendsViewModel
@@ -27,9 +28,9 @@ class ToolsFragment : Fragment(), OnItemClickListener {
 
     private lateinit var toolsRecyclerView: RecyclerView
     private lateinit var toolsAdapter: ToolAdapter
-    private lateinit var tools: List<Tool>
+    private lateinit var tools: List<ToolsWithFriends>
     private lateinit var friends: List<Friend>
-    private lateinit var selectedTool: Tool
+    private lateinit var selectedTool: ToolsWithFriends
     private lateinit var selectedFriend: Friend
 
     override fun onCreateView(
@@ -44,11 +45,7 @@ class ToolsFragment : Fragment(), OnItemClickListener {
         toolsRecyclerView = root.findViewById(R.id.rvToolsView)
 
         setupToolsList()
-
-        toolsViewModel.getTools()?.observe(viewLifecycleOwner, Observer<List<Tool>> { tools ->
-            this.tools = tools
-            toolsAdapter.setTools(tools)
-        })
+        loadToolsList()
 
         return root
     }
@@ -59,6 +56,14 @@ class ToolsFragment : Fragment(), OnItemClickListener {
         toolsRecyclerView.addItemDecoration(getItemDecoration())
     }
 
+    private fun loadToolsList(){
+        toolsViewModel.getToolsWithFriends()?.observe(viewLifecycleOwner, Observer<List<ToolsWithFriends>> { toolWithFriends ->
+            println("@@@@@ $toolWithFriends")
+            this.tools = toolWithFriends
+            toolsAdapter.setTools(toolWithFriends)
+        })
+    }
+
     private fun getItemDecoration(): RecyclerView.ItemDecoration {
         val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         ContextCompat.getDrawable(requireContext(), R.drawable.recycler_divider)?.let {
@@ -67,9 +72,9 @@ class ToolsFragment : Fragment(), OnItemClickListener {
         return divider
     }
 
-    override fun onItemClicked(tool: Tool) {
+    override fun onItemClicked(tool: ToolsWithFriends) {
         this.selectedTool = tool
-        Toast.makeText(activity, "Tool ${tool.name} selected", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, "Tool ${tool.tool.name} selected", Toast.LENGTH_LONG).show()
         friendsViewModel.getFriends()?.observe(viewLifecycleOwner, Observer<List<Friend>> { friends ->
                 this.friends = friends
                 val friendsArray = arrayListOf<String>()
@@ -91,7 +96,7 @@ class ToolsFragment : Fragment(), OnItemClickListener {
             selectedToolIndex = which
         }
 
-        builder.setPositiveButton("OK") { _, which ->
+        builder.setPositiveButton("OK") { _, _ ->
             this.friends.let {
                 this.selectedFriend = it[selectedToolIndex]
                 saveLoanStatus()
@@ -104,7 +109,8 @@ class ToolsFragment : Fragment(), OnItemClickListener {
     private fun saveLoanStatus(){
         if (listOfNotNull(selectedTool, selectedFriend).size == 2) {
             println("@@@@ All variables are non-null")
-
+            toolsViewModel.saveToolWithFriend(ToolFriendCrossRef(selectedTool.tool.toolId, selectedFriend.friendId))
+            loadToolsList()
         }
     }
 }

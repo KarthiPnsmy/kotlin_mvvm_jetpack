@@ -3,6 +3,7 @@ package com.titut.inventory.repository
 import android.app.Application
 import com.titut.inventory.db.InventoryDatabase
 import com.titut.inventory.db.dao.ToolDao
+import com.titut.inventory.db.entity.ToolFriendCrossRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,4 +23,18 @@ class ToolRepository(application: Application) : CoroutineScope {
     }
 
     fun getTools() = toolDao?.getAllTools()
+
+    fun getToolsWithFriends() = toolDao?.getToolsWithFriends()
+
+    fun saveToolWithFriend(toolWithFriend: ToolFriendCrossRef) {
+        launch  {
+            saveToolWithFriendAsync(toolWithFriend)
+        }
+    }
+
+    private suspend fun saveToolWithFriendAsync(toolWithFriend: ToolFriendCrossRef){
+        withContext(Dispatchers.IO){
+            toolDao?.insertToolWithFriend(toolWithFriend)
+        }
+    }
 }
