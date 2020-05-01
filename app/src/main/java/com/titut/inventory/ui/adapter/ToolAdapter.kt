@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.Tool
 
-class ToolAdapter : RecyclerView.Adapter<ToolAdapter.ToolHolder>() {
+class ToolAdapter(val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<ToolAdapter.ToolHolder>() {
     private var tools: List<Tool> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToolHolder {
@@ -22,10 +22,7 @@ class ToolAdapter : RecyclerView.Adapter<ToolAdapter.ToolHolder>() {
 
     override fun onBindViewHolder(holder: ToolHolder, position: Int) {
         val tool = tools[position]
-        holder.tvToolName.text = tool.name
-        holder.ivToolImage.setImageDrawable(ContextCompat.getDrawable(holder.ivToolImage.context, tool.image))
-        holder.tvInventory.text = "Inventory: ${tool.quantity}"
-        holder.tvLoanStatus.text = "On Loan: 4"
+        holder.bind(tool, itemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -42,5 +39,20 @@ class ToolAdapter : RecyclerView.Adapter<ToolAdapter.ToolHolder>() {
         var ivToolImage: ImageView = itemView.findViewById(R.id.ivToolImage)
         var tvLoanStatus: TextView = itemView.findViewById(R.id.tvLoan)
         var tvInventory: TextView = itemView.findViewById(R.id.tvInventory)
+
+        fun bind(tool: Tool, clickListener: OnItemClickListener) {
+            tvToolName.text = tool.name
+            ivToolImage.setImageDrawable(ContextCompat.getDrawable(ivToolImage.context, tool.image))
+            tvLoanStatus.text = "Inventory: ${tool.quantity}"
+            tvInventory.text = "On Loan: 4"
+
+            itemView.setOnClickListener {
+                clickListener.onItemClicked(tool)
+            }
+        }
     }
+}
+
+interface OnItemClickListener{
+    fun onItemClicked(tool: Tool)
 }
