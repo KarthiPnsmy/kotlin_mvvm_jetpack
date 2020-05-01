@@ -23,4 +23,6 @@ class FriendRepository(application: Application) : CoroutineScope {
     }
 
     fun getFriends() = friendDao?.getAllFriends()
+
+    fun getFriendsWithTools() = friendDao?.getFriendsWithTools()
 }

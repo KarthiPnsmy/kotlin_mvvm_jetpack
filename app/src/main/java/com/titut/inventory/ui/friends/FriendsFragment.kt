@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.Friend
+import com.titut.inventory.db.entity.FriendsWithTools
 import com.titut.inventory.ui.adapter.FriendsAdapter
 
 class FriendsFragment : Fragment() {
@@ -31,8 +32,8 @@ class FriendsFragment : Fragment() {
 
         setupFriendsList()
 
-        friendsViewModel.getFriends()?.observe(viewLifecycleOwner, Observer<List<Friend>> { friends ->
-            friendsAdapter.setFriends(friends)
+        friendsViewModel.getFriendsWithTools()?.observe(viewLifecycleOwner, Observer<List<FriendsWithTools>> { friendsWithTools ->
+            friendsAdapter.setFriends(friendsWithTools)
         })
 
         return root

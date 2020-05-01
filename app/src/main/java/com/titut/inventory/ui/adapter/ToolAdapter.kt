@@ -9,11 +9,10 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
-import com.titut.inventory.db.entity.Tool
 import com.titut.inventory.db.entity.ToolsWithFriends
 
 class ToolAdapter(val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<ToolAdapter.ToolHolder>() {
-    private var tools: List<ToolsWithFriends> = ArrayList()
+    private var tools: List<ToolsWithFriends> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToolHolder {
         val itemView = LayoutInflater.from(parent.context)

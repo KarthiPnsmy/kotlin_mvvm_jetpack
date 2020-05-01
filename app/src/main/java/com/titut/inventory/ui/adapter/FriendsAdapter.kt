@@ -9,9 +9,10 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.Friend
+import com.titut.inventory.db.entity.FriendsWithTools
 
 class FriendsAdapter : RecyclerView.Adapter<FriendsAdapter.FriendHolder>() {
-    private var friends: List<Friend> = ArrayList()
+    private var friends: List<FriendsWithTools> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -20,23 +21,22 @@ class FriendsAdapter : RecyclerView.Adapter<FriendsAdapter.FriendHolder>() {
     }
 
     override fun onBindViewHolder(holder: FriendHolder, position: Int) {
-        val friend = friends[position]
-        holder.tvFriendName.text = friend.name
-        holder.tvLoanStatus.text = "Total items on loan: 4"
+        val friendsWithTools = friends[position]
+        holder.tvFriendName.text = friendsWithTools.friend.name
+        holder.tvLoanStatus.text = "Total items on loan: ${friendsWithTools.tools.size}"
     }
 
     override fun getItemCount(): Int {
         return friends.size
     }
 
-    fun setFriends(friends: List<Friend>) {
+    fun setFriends(friends: List<FriendsWithTools>) {
         this.friends = friends
         notifyDataSetChanged()
     }
 
     inner class FriendHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvFriendName: TextView = itemView.findViewById(R.id.tvFriendName)
-        var ivFriendImage: ImageView = itemView.findViewById(R.id.ivFriendImage)
         var tvLoanStatus: TextView = itemView.findViewById(R.id.tvLoan)
     }
 }

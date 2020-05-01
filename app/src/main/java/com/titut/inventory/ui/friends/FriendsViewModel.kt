@@ -12,4 +12,6 @@ class FriendsViewModel(application: Application) : AndroidViewModel(application)
     private var repository: FriendRepository = FriendRepository(application)
 
     fun getFriends() = repository.getFriends()
+
+    fun getFriendsWithTools() = repository.getFriendsWithTools()
 }
