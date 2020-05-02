@@ -45,9 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="14sp"
-            android:textColor="#239B56"
+            android:textColor="@color/colorGreen"
             android:textStyle="bold"
-            tools:text="Inventory: 16" />
+            tools:text="Total items: 16" />
 
         <TextView
             android:id="@+id/tvLoan"
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="#EC7063"
+            android:textColor="@color/colorRed"
             android:textStyle="bold"
             tools:text="On Loan: 4" />
     </LinearLayout>

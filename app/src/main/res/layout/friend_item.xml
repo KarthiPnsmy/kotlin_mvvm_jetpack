@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="#EC7063"
+            android:textColor="@color/colorRed"
             android:textStyle="bold"
             tools:text="Total items on loan: 4" />
     </LinearLayout>
