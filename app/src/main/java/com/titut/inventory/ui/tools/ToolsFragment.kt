@@ -17,7 +17,8 @@ import com.titut.inventory.db.entity.Friend
 import com.titut.inventory.db.entity.ToolFriendCrossRef
 import com.titut.inventory.db.entity.ToolsWithFriends
 import com.titut.inventory.ui.adapter.OnItemClickListener
-import com.titut.inventory.ui.adapter.ToolAdapter
+import com.titut.inventory.ui.adapter.DetailAdapter
+import com.titut.inventory.ui.adapter.ToolsAdapter
 import com.titut.inventory.ui.friends.FriendsViewModel
 
 
@@ -27,7 +28,7 @@ class ToolsFragment : Fragment(), OnItemClickListener {
     private lateinit var friendsViewModel: FriendsViewModel
 
     private lateinit var toolsRecyclerView: RecyclerView
-    private lateinit var toolsAdapter: ToolAdapter
+    private lateinit var toolsAdapter: ToolsAdapter
     private lateinit var tools: List<ToolsWithFriends>
     private lateinit var friends: List<Friend>
     private lateinit var selectedTool: ToolsWithFriends
@@ -51,7 +52,7 @@ class ToolsFragment : Fragment(), OnItemClickListener {
     }
 
     private fun setupToolsList() {
-        toolsAdapter = ToolAdapter(this)
+        toolsAdapter = ToolsAdapter(this)
         toolsRecyclerView.adapter = toolsAdapter
         toolsRecyclerView.addItemDecoration(getItemDecoration())
     }
@@ -108,7 +109,6 @@ class ToolsFragment : Fragment(), OnItemClickListener {
 
     private fun saveLoanStatus(){
         if (listOfNotNull(selectedTool, selectedFriend).size == 2) {
-            println("@@@@ All variables are non-null")
             toolsViewModel.saveToolWithFriend(ToolFriendCrossRef(selectedTool.tool.toolId, selectedFriend.friendId))
             loadToolsList()
         }

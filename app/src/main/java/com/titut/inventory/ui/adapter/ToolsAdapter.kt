@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.ToolsWithFriends
 
-class ToolAdapter(val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<ToolAdapter.ToolHolder>() {
+class ToolsAdapter(private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<ToolsAdapter.ToolHolder>() {
     private var tools: List<ToolsWithFriends> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToolHolder {

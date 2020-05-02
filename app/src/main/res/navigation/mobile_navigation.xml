@@ -17,4 +17,15 @@
         android:label="@string/title_friends"
         tools:layout="@layout/fragment_friends" />
 
+    <fragment
+        android:id="@+id/navigation_detail"
+        android:name="com.titut.inventory.ui.detail.DetailFragment"
+        android:label="@string/title_friends"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="friendId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+
 </navigation>

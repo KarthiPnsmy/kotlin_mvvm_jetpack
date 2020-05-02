@@ -8,19 +8,24 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.Friend
 import com.titut.inventory.db.entity.FriendsWithTools
 import com.titut.inventory.ui.adapter.FriendsAdapter
+import com.titut.inventory.ui.adapter.OnFriendItemClickListener
 
-class FriendsFragment : Fragment() {
+class FriendsFragment : Fragment(), OnFriendItemClickListener {
 
     private lateinit var friendsViewModel: FriendsViewModel
     private lateinit var friendsRecyclerView: RecyclerView
     private lateinit var friendsAdapter: FriendsAdapter
 
+    companion object {
+        const val ARG_FRIEND_ID: String = "friendId"
+    }
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -40,7 +45,7 @@ class FriendsFragment : Fragment() {
     }
 
     private fun setupFriendsList() {
-        friendsAdapter = FriendsAdapter()
+        friendsAdapter = FriendsAdapter(this)
         friendsRecyclerView.adapter = friendsAdapter
         friendsRecyclerView.addItemDecoration(getItemDecoration())
     }
@@ -51,5 +56,12 @@ class FriendsFragment : Fragment() {
             divider.setDrawable(it)
         }
         return divider
+    }
+
+    override fun onItemClicked(friendsWithTools: FriendsWithTools) {
+        println("@@@@ friendsWithTools $friendsWithTools")
+        val bundle = Bundle()
+        bundle.putLong(ARG_FRIEND_ID, friendsWithTools.friend.friendId)
+        findNavController().navigate(R.id.navigation_detail, bundle)
     }
 }

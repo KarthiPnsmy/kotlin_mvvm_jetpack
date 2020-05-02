@@ -22,4 +22,8 @@ interface FriendDao {
     @Transaction
     @Query("SELECT * FROM Friend")
     fun getFriendsWithTools(): LiveData<List<FriendsWithTools>>
+
+    @Transaction
+    @Query("SELECT * FROM Friend where friendId == :id")
+    fun getFriendsWithToolsByFriend(id: Long): LiveData<FriendsWithTools>
 }
