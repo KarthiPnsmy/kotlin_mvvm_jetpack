@@ -25,8 +25,8 @@ interface ToolDao {
     @Query("SELECT * FROM Tool")
     fun getToolsWithFriends(): LiveData<List<ToolsWithFriends>>
 
-    @Delete
-    fun deleteToolWithFriend(toolFriendCrossRef: ToolFriendCrossRef)
+    @Query("DELETE FROM ToolFriendCrossRef WHERE id =(SELECT id FROM ToolFriendCrossRef WHERE friendId = :friendId and toolId = :toolId LIMIT 1)")
+    fun deleteToolFromFriend(friendId: Long, toolId: Long)
 
     @Query("SELECT Friend.name as friendName, ToolFriendCrossRef.toolId, Tool.name as toolName, Tool.image as toolImage, COUNT(ToolFriendCrossRef.toolId) as quantity\n" +
             "FROM ((ToolFriendCrossRef\n" +

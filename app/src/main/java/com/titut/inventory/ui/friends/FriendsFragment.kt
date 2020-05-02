@@ -23,10 +23,11 @@ class FriendsFragment : BaseFragment(), OnFriendItemClickListener {
     companion object {
         const val ARG_FRIEND_ID: String = "friendId"
     }
+
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         friendsViewModel = ViewModelProvider(this).get(FriendsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_friends, container, false)
@@ -34,9 +35,10 @@ class FriendsFragment : BaseFragment(), OnFriendItemClickListener {
 
         setupFriendsList()
 
-        friendsViewModel.getFriendsWithTools()?.observe(viewLifecycleOwner, Observer<List<FriendsWithTools>> { friendsWithTools ->
-            friendsAdapter.setFriends(friendsWithTools)
-        })
+        friendsViewModel.getFriendsWithTools()
+            ?.observe(viewLifecycleOwner, Observer<List<FriendsWithTools>> { friendsWithTools ->
+                friendsAdapter.setFriends(friendsWithTools)
+            })
 
         return root
     }

@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.ToolsOnLoan
 
-class DetailAdapter(private val itemClickListener: OnToolItemClickListener) : RecyclerView.Adapter<DetailAdapter.SimpleToolHolder>() {
+class DetailAdapter(private val itemClickListener: OnToolItemClickListener) :
+    RecyclerView.Adapter<DetailAdapter.SimpleToolHolder>() {
     private var tools: List<ToolsOnLoan> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleToolHolder {
@@ -43,7 +44,12 @@ class DetailAdapter(private val itemClickListener: OnToolItemClickListener) : Re
 
         fun bind(tool: ToolsOnLoan, clickListener: OnToolItemClickListener) {
             tvToolName.text = tool.toolName
-            ivToolImage.setImageDrawable(ContextCompat.getDrawable(ivToolImage.context, tool.toolImage))
+            ivToolImage.setImageDrawable(
+                ContextCompat.getDrawable(
+                    ivToolImage.context,
+                    tool.toolImage
+                )
+            )
             tvInventory.isVisible = false
             tvLoan.text = "On Loan: ${tool.quantity}"
 
@@ -54,6 +60,6 @@ class DetailAdapter(private val itemClickListener: OnToolItemClickListener) : Re
     }
 }
 
-interface OnToolItemClickListener{
+interface OnToolItemClickListener {
     fun onItemClicked(tool: ToolsOnLoan)
 }

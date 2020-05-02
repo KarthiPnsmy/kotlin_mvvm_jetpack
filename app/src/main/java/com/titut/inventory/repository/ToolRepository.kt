@@ -34,9 +34,9 @@ class ToolRepository(application: Application) : CoroutineScope {
         }
     }
 
-    fun deleteToolWithFriend(toolWithFriend: ToolFriendCrossRef) {
+    fun deleteToolFromFriend(friendId: Long, toolId: Long) {
         launch  {
-            deleteToolWithFriendAsync(toolWithFriend)
+            deleteToolFromFriendAsync(friendId, toolId)
         }
     }
 
@@ -46,9 +46,9 @@ class ToolRepository(application: Application) : CoroutineScope {
         }
     }
 
-    private suspend fun deleteToolWithFriendAsync(toolWithFriend: ToolFriendCrossRef){
+    private suspend fun deleteToolFromFriendAsync(friendId: Long, toolId: Long){
         withContext(Dispatchers.IO){
-            toolDao?.deleteToolWithFriend(toolWithFriend)
+            toolDao?.deleteToolFromFriend(friendId, toolId)
         }
     }
 }

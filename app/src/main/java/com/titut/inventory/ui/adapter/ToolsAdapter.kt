@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.ToolsWithFriends
 
-class ToolsAdapter(private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<ToolsAdapter.ToolHolder>() {
+class ToolsAdapter(private val itemClickListener: OnItemClickListener) :
+    RecyclerView.Adapter<ToolsAdapter.ToolHolder>() {
     private var tools: List<ToolsWithFriends> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToolHolder {
@@ -42,8 +43,13 @@ class ToolsAdapter(private val itemClickListener: OnItemClickListener) : Recycle
 
         fun bind(toolWithFriends: ToolsWithFriends, clickListener: OnItemClickListener) {
             tvToolName.text = toolWithFriends.tool.name
-            ivToolImage.setImageDrawable(ContextCompat.getDrawable(ivToolImage.context, toolWithFriends.tool.image))
-            tvLoanStatus.text =  "On Loan: ${toolWithFriends.friends.size}"
+            ivToolImage.setImageDrawable(
+                ContextCompat.getDrawable(
+                    ivToolImage.context,
+                    toolWithFriends.tool.image
+                )
+            )
+            tvLoanStatus.text = "On Loan: ${toolWithFriends.friends.size}"
             tvInventory.text = "Total Items: ${toolWithFriends.tool.quantity}"
 
             itemView.setOnClickListener {
@@ -53,6 +59,6 @@ class ToolsAdapter(private val itemClickListener: OnItemClickListener) : Recycle
     }
 }
 
-interface OnItemClickListener{
+interface OnItemClickListener {
     fun onItemClicked(tool: ToolsWithFriends)
 }

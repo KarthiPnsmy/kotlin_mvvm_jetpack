@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.FriendsWithTools
 
-class FriendsAdapter(private val clickListener: OnFriendItemClickListener) : RecyclerView.Adapter<FriendsAdapter.FriendHolder>() {
+class FriendsAdapter(private val clickListener: OnFriendItemClickListener) :
+    RecyclerView.Adapter<FriendsAdapter.FriendHolder>() {
     private var friends: List<FriendsWithTools> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendHolder {
@@ -48,6 +49,6 @@ class FriendsAdapter(private val clickListener: OnFriendItemClickListener) : Rec
     }
 }
 
-interface OnFriendItemClickListener{
+interface OnFriendItemClickListener {
     fun onItemClicked(friendsWithTools: FriendsWithTools)
 }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -54,16 +53,18 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
         toolsRecyclerView.addItemDecoration(getItemDecoration())
     }
 
-    private fun loadToolsList(){
-        toolsViewModel.getToolsWithFriends()?.observe(viewLifecycleOwner, Observer<List<ToolsWithFriends>> { toolWithFriends ->
-            this.tools = toolWithFriends
-            toolsAdapter.setTools(toolWithFriends)
-        })
+    private fun loadToolsList() {
+        toolsViewModel.getToolsWithFriends()
+            ?.observe(viewLifecycleOwner, Observer<List<ToolsWithFriends>> { toolWithFriends ->
+                this.tools = toolWithFriends
+                toolsAdapter.setTools(toolWithFriends)
+            })
     }
 
     override fun onItemClicked(tool: ToolsWithFriends) {
         this.selectedTool = tool
-        friendsViewModel.getFriends()?.observe(viewLifecycleOwner, Observer<List<Friend>> { friends ->
+        friendsViewModel.getFriends()
+            ?.observe(viewLifecycleOwner, Observer<List<Friend>> { friends ->
                 this.friends = friends
                 val friendsArray = arrayListOf<String>()
                 friends.map {
@@ -94,9 +95,14 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
         builder.create().show()
     }
 
-    private fun saveLoanStatus(){
+    private fun saveLoanStatus() {
         if (listOfNotNull(selectedTool, selectedFriend).size == 2) {
-            toolsViewModel.saveToolWithFriend(ToolFriendCrossRef(selectedTool.tool.toolId, selectedFriend.friendId))
+            toolsViewModel.saveToolWithFriend(
+                ToolFriendCrossRef(
+                    selectedTool.tool.toolId,
+                    selectedFriend.friendId
+                )
+            )
             loadToolsList()
         }
     }

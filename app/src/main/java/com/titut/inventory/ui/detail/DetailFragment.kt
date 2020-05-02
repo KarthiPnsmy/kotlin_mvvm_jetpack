@@ -55,18 +55,10 @@ class DetailFragment : BaseFragment(), OnToolItemClickListener {
     }
 
     private fun loadFriendsWithTools() {
-//        detailViewModel.getFriendsWithToolsByFriend(selectedFriendId)?.observe(viewLifecycleOwner, Observer<FriendsWithTools> { friendsWithTools ->
-//            tvFriendName.text = friendsWithTools.friend.name
-//            tvEmptyView.isVisible = friendsWithTools.tools.isEmpty()
-//            detailAdapter.setTools(friendsWithTools.tools)
-//        })
-
         detailViewModel.getToolsWithFriendOnLoan(selectedFriendId)
             ?.observe(viewLifecycleOwner, Observer<List<ToolsOnLoan>> { toolsOnLoan ->
-                println("@@@@@ $toolsOnLoan")
                 tvEmptyView.isVisible = toolsOnLoan.isEmpty()
                 detailAdapter.setTools(toolsOnLoan)
-
             })
     }
 
@@ -87,13 +79,11 @@ class DetailFragment : BaseFragment(), OnToolItemClickListener {
 
     private fun saveReturnStatus() {
         selectedTool.let {
-//            toolsViewModel.deleteToolWithFriend(
-//                ToolFriendCrossRef(
-//                    selectedTool.toolId,
-//                    selectedFriendId
-//                )
-//            )
-//            loadFriendsWithTools()
+            toolsViewModel.deleteToolFromFriend(
+                selectedFriendId,
+                selectedTool.toolId
+            )
+            loadFriendsWithTools()
         }
     }
 }

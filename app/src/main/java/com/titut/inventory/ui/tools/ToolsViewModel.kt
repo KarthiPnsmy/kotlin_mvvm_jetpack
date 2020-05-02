@@ -9,11 +9,11 @@ class ToolsViewModel(application: Application) : AndroidViewModel(application) {
 
     private var toolsRepository: ToolRepository = ToolRepository(application)
 
-    fun getTools() = toolsRepository.getTools()
-
     fun getToolsWithFriends() = toolsRepository.getToolsWithFriends()
 
-    fun saveToolWithFriend(toolWithFriend: ToolFriendCrossRef) = toolsRepository.saveToolWithFriend(toolWithFriend)
+    fun saveToolWithFriend(toolWithFriend: ToolFriendCrossRef) =
+        toolsRepository.saveToolWithFriend(toolWithFriend)
 
-    fun deleteToolWithFriend(toolWithFriend: ToolFriendCrossRef) = toolsRepository.deleteToolWithFriend(toolWithFriend)
+    fun deleteToolFromFriend(friendId: Long, toolId: Long) =
+        toolsRepository.deleteToolFromFriend(friendId, toolId)
 }
