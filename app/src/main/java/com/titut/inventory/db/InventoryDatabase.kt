@@ -13,7 +13,8 @@ import com.titut.inventory.db.dao.ToolDao
 import com.titut.inventory.db.entity.Friend
 import com.titut.inventory.db.entity.Tool
 import com.titut.inventory.db.entity.ToolFriendCrossRef
-import java.util.concurrent.Executors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @Database(entities = [Tool::class, Friend::class, ToolFriendCrossRef::class], version = 1)
@@ -23,31 +24,37 @@ abstract class InventoryDatabase : RoomDatabase() {
     abstract fun friendDao(): FriendDao
 
     companion object {
-        private var instance: InventoryDatabase? = null
+        @Volatile
+        private var INSTANCE: InventoryDatabase? = null
 
-        fun getDatabase(context: Context): InventoryDatabase {
-            if (instance == null) {
-                synchronized(InventoryDatabase::class) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        InventoryDatabase::class.java, "inventory_database"
-                    )
-                        .fallbackToDestructiveMigration()
-                        .addCallback(roomCallback)
-                        .build()
-                }
+        fun getInstance(context: Context, scope: CoroutineScope): InventoryDatabase =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: buildDatabase(context, scope).also { INSTANCE = it }
             }
-            return instance!!
-        }
 
-        private val roomCallback = object : RoomDatabase.Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
+        private fun buildDatabase(context: Context, scope: CoroutineScope) =
+            Room.databaseBuilder(
+                context.applicationContext,
+                InventoryDatabase::class.java, "inventory_database"
+            )
+                .addCallback(InventoryDatabaseCallback(scope))
+                .build()
+    }
 
-                Executors.newSingleThreadScheduledExecutor().execute(Runnable {
-                    instance?.friendDao()?.insertAll(preloadFriendData())
-                    instance?.toolDao()?.insertAll(preloadToolsData())
-                })
+    private class InventoryDatabaseCallback(
+        private val scope: CoroutineScope
+    ) : RoomDatabase.Callback() {
+
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            INSTANCE?.let { database ->
+                scope.launch {
+                    val toolDao = database.toolDao()
+                    val friendDao = database.friendDao()
+
+                    friendDao.insertAll(preloadFriendData())
+                    toolDao.insertAll(preloadToolsData())
+                }
             }
         }
     }

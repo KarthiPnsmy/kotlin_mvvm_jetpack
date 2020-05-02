@@ -11,10 +11,10 @@ import com.titut.inventory.db.entity.FriendsWithTools
 @Dao
 interface FriendDao {
     @Insert
-    fun insert(friend: Friend)
+    suspend fun insert(friend: Friend)
 
     @Insert
-    fun insertAll(friends: List<Friend>)
+    suspend fun insertAll(friends: List<Friend>)
 
     @Query("SELECT * FROM Friend")
     fun getAllFriends(): LiveData<List<Friend>>

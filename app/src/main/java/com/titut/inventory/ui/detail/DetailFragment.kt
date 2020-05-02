@@ -19,7 +19,6 @@ import com.titut.inventory.ui.tools.ToolsViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : BaseFragment(), OnToolItemClickListener {
-    private lateinit var detailViewModel: DetailViewModel
     private lateinit var toolsViewModel: ToolsViewModel
 
     private lateinit var detailRecyclerView: RecyclerView
@@ -32,7 +31,6 @@ class DetailFragment : BaseFragment(), OnToolItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
         toolsViewModel = ViewModelProvider(this).get(ToolsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         detailRecyclerView = root.findViewById(R.id.rvDetailView)
@@ -55,8 +53,8 @@ class DetailFragment : BaseFragment(), OnToolItemClickListener {
     }
 
     private fun loadFriendsWithTools() {
-        detailViewModel.getToolsWithFriendOnLoan(selectedFriendId)
-            ?.observe(viewLifecycleOwner, Observer<List<ToolsOnLoan>> { toolsOnLoan ->
+        toolsViewModel.getToolsWithFriendOnLoan(selectedFriendId)
+            .observe(viewLifecycleOwner, Observer<List<ToolsOnLoan>> { toolsOnLoan ->
                 tvEmptyView.isVisible = toolsOnLoan.isEmpty()
                 detailAdapter.setTools(toolsOnLoan)
             })
