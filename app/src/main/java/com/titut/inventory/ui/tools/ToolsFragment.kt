@@ -55,7 +55,7 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
 
     private fun loadToolsList() {
         toolsViewModel.getToolsWithFriends()
-            ?.observe(viewLifecycleOwner, Observer<List<ToolsWithFriends>> { toolWithFriends ->
+            .observe(viewLifecycleOwner, Observer<List<ToolsWithFriends>> { toolWithFriends ->
                 this.tools = toolWithFriends
                 toolsAdapter.setTools(toolWithFriends)
             })
@@ -64,7 +64,7 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
     override fun onItemClicked(tool: ToolsWithFriends) {
         this.selectedTool = tool
         friendsViewModel.getFriends()
-            ?.observe(viewLifecycleOwner, Observer<List<Friend>> { friends ->
+            .observe(viewLifecycleOwner, Observer<List<Friend>> { friends ->
                 this.friends = friends
                 val friendsArray = arrayListOf<String>()
                 friends.map {
