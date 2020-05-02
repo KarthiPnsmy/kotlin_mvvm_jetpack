@@ -1,6 +1,7 @@
 package com.titut.inventory.ui.adapter
 
 
+import android.annotation.SuppressLint
 import android.widget.TextView
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,7 @@ class FriendsAdapter(private val clickListener: OnFriendItemClickListener) :
         var tvFriendName: TextView = itemView.findViewById(R.id.tvFriendName)
         var tvLoanStatus: TextView = itemView.findViewById(R.id.tvLoan)
 
+        @SuppressLint("SetTextI18n")
         fun bind(friendsWithTools: FriendsWithTools, clickListener: OnFriendItemClickListener) {
             tvFriendName.text = friendsWithTools.friend.name
             tvLoanStatus.text = "Total items on loan: ${friendsWithTools.tools.size}"

@@ -1,6 +1,7 @@
 package com.titut.inventory.ui.adapter
 
 
+import android.annotation.SuppressLint
 import android.widget.TextView
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,7 @@ class DetailAdapter(private val itemClickListener: OnToolItemClickListener) :
         private var tvInventory: TextView = itemView.findViewById(R.id.tvInventory)
         var tvLoan: TextView = itemView.findViewById(R.id.tvLoan)
 
+        @SuppressLint("SetTextI18n")
         fun bind(tool: ToolsOnLoan, clickListener: OnToolItemClickListener) {
             tvToolName.text = tool.toolName
             ivToolImage.setImageDrawable(

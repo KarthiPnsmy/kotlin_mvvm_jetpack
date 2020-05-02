@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">inventory</string>
+    <string name="app_name">Inventory</string>
     <string name="title_tools">Tools</string>
     <string name="title_friends">Friends</string>
     <string name="title_detail">Detail</string>
+    <string name="msg_select_friend_to_loan">Select a friend to loan</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="msg_want_to_mark_as_returned">Are you sure want to mark this item as returned?</string>
 </resources>

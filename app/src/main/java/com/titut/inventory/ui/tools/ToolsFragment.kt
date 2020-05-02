@@ -78,20 +78,20 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
     private fun showSelectionDialog(friends: ArrayList<String>) {
         val friendsArray = friends.toArray(arrayOfNulls<CharSequence>(friends.size))
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Select a friend to loan")
+        builder.setTitle(getString(R.string.msg_select_friend_to_loan))
 
         var selectedToolIndex = -1
         builder.setSingleChoiceItems(friendsArray, -1) { _, which ->
             selectedToolIndex = which
         }
 
-        builder.setPositiveButton("OK") { _, _ ->
+        builder.setPositiveButton(getString(R.string.btn_ok)) { _, _ ->
             this.friends.let {
                 this.selectedFriend = it[selectedToolIndex]
                 saveLoanStatus()
             }
         }
-        builder.setNegativeButton("Cancel", null)
+        builder.setNegativeButton(getString(R.string.btn_cancel), null)
         builder.create().show()
     }
 

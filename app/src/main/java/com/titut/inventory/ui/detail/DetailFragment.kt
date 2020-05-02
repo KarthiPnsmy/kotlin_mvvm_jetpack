@@ -69,11 +69,11 @@ class DetailFragment : BaseFragment(), OnToolItemClickListener {
 
     private fun showSelectionDialog() {
         val builder = AlertDialog.Builder(context)
-        builder.setMessage("Are you sure want to mark this item as returned?")
-        builder.setPositiveButton("OK") { _, _ ->
+        builder.setMessage(getString(R.string.msg_want_to_mark_as_returned))
+        builder.setPositiveButton(getString(R.string.btn_ok)) { _, _ ->
             saveReturnStatus()
         }
-        builder.setNegativeButton("Cancel", null)
+        builder.setNegativeButton(getString(R.string.btn_cancel), null)
         builder.create().show()
     }
 
