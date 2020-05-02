@@ -8,18 +8,6 @@
     tools:context=".ui.friends.FriendsFragment">
 
     <TextView
-        android:id="@+id/tvFriendName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        tools:text="Mr. Martin" />
-
-    <TextView
         android:id="@+id/tvEmptyView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

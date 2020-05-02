@@ -26,6 +26,8 @@ class ToolRepository(application: Application) : CoroutineScope {
 
     fun getToolsWithFriends() = toolDao?.getToolsWithFriends()
 
+    fun getToolsWithFriendOnLoan(friendId: Long) = toolDao?.getAllToolsOnLoan(friendId)
+
     fun saveToolWithFriend(toolWithFriend: ToolFriendCrossRef) {
         launch  {
             saveToolWithFriendAsync(toolWithFriend)

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.titut.inventory.db.entity.Tool
 import com.titut.inventory.db.entity.ToolFriendCrossRef
+import com.titut.inventory.db.entity.ToolsOnLoan
 import com.titut.inventory.db.entity.ToolsWithFriends
 
 @Dao
@@ -26,4 +27,12 @@ interface ToolDao {
 
     @Delete
     fun deleteToolWithFriend(toolFriendCrossRef: ToolFriendCrossRef)
+
+    @Query("SELECT Friend.name as friendName, ToolFriendCrossRef.toolId, Tool.name as toolName, Tool.image as toolImage, COUNT(ToolFriendCrossRef.toolId) as quantity\n" +
+            "FROM ((ToolFriendCrossRef\n" +
+            "INNER JOIN Friend ON ToolFriendCrossRef.friendId = Friend.friendId)\n" +
+            "INNER JOIN Tool ON ToolFriendCrossRef.toolId = Tool.toolId)\n" +
+            "WHERE Friend.friendId = :friendId\n" +
+            "GROUP BY ToolFriendCrossRef.toolId")
+    fun getAllToolsOnLoan(friendId: Long): LiveData<List<ToolsOnLoan>>
 }
