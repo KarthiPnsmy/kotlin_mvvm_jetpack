@@ -31,7 +31,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginBottom="20dp"
         tools:visibility="visible"
-        tools:text="Loan item not available" />
+        android:text="Loan item not available" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDetailView"

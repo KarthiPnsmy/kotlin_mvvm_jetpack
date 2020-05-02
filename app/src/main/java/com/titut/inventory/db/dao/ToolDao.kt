@@ -23,4 +23,7 @@ interface ToolDao {
     @Transaction
     @Query("SELECT * FROM Tool")
     fun getToolsWithFriends(): LiveData<List<ToolsWithFriends>>
+
+    @Delete
+    fun deleteToolWithFriend(toolFriendCrossRef: ToolFriendCrossRef)
 }

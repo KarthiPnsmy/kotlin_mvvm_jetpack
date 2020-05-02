@@ -32,9 +32,21 @@ class ToolRepository(application: Application) : CoroutineScope {
         }
     }
 
+    fun deleteToolWithFriend(toolWithFriend: ToolFriendCrossRef) {
+        launch  {
+            deleteToolWithFriendAsync(toolWithFriend)
+        }
+    }
+
     private suspend fun saveToolWithFriendAsync(toolWithFriend: ToolFriendCrossRef){
         withContext(Dispatchers.IO){
             toolDao?.insertToolWithFriend(toolWithFriend)
+        }
+    }
+
+    private suspend fun deleteToolWithFriendAsync(toolWithFriend: ToolFriendCrossRef){
+        withContext(Dispatchers.IO){
+            toolDao?.deleteToolWithFriend(toolWithFriend)
         }
     }
 }

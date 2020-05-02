@@ -6,23 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.titut.inventory.BaseFragment
 import com.titut.inventory.R
 import com.titut.inventory.db.entity.Friend
 import com.titut.inventory.db.entity.ToolFriendCrossRef
 import com.titut.inventory.db.entity.ToolsWithFriends
 import com.titut.inventory.ui.adapter.OnItemClickListener
-import com.titut.inventory.ui.adapter.DetailAdapter
 import com.titut.inventory.ui.adapter.ToolsAdapter
 import com.titut.inventory.ui.friends.FriendsViewModel
 
 
-class ToolsFragment : Fragment(), OnItemClickListener {
+class ToolsFragment : BaseFragment(), OnItemClickListener {
 
     private lateinit var toolsViewModel: ToolsViewModel
     private lateinit var friendsViewModel: FriendsViewModel
@@ -59,23 +56,13 @@ class ToolsFragment : Fragment(), OnItemClickListener {
 
     private fun loadToolsList(){
         toolsViewModel.getToolsWithFriends()?.observe(viewLifecycleOwner, Observer<List<ToolsWithFriends>> { toolWithFriends ->
-            println("@@@@@ $toolWithFriends")
             this.tools = toolWithFriends
             toolsAdapter.setTools(toolWithFriends)
         })
     }
 
-    private fun getItemDecoration(): RecyclerView.ItemDecoration {
-        val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-        ContextCompat.getDrawable(requireContext(), R.drawable.recycler_divider)?.let {
-            divider.setDrawable(it)
-        }
-        return divider
-    }
-
     override fun onItemClicked(tool: ToolsWithFriends) {
         this.selectedTool = tool
-        Toast.makeText(activity, "Tool ${tool.tool.name} selected", Toast.LENGTH_LONG).show()
         friendsViewModel.getFriends()?.observe(viewLifecycleOwner, Observer<List<Friend>> { friends ->
                 this.friends = friends
                 val friendsArray = arrayListOf<String>()
