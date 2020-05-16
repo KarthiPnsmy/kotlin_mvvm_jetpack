@@ -40,7 +40,7 @@ class FriendsFragment : BaseFragment(), OnFriendItemClickListener {
         setupFriendsList()
 
         friendsViewModel.getFriendsWithTools()
-            ?.observe(viewLifecycleOwner, Observer<List<FriendsWithTools>> { friendsWithTools ->
+            .observe(viewLifecycleOwner, Observer<List<FriendsWithTools>> { friendsWithTools ->
                 friendsAdapter.setFriends(friendsWithTools)
             })
 

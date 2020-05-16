@@ -32,9 +32,6 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
     private lateinit var selectedFriend: Friend
 
     @Inject
-    lateinit var testString: String
-
-    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(
@@ -47,8 +44,6 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
 
         val root = inflater.inflate(R.layout.fragment_tools, container, false)
         toolsRecyclerView = root.findViewById(R.id.rvToolsView)
-
-        println("@@@@ testString ToolsFragment = $testString")
 
         setupToolsList()
         loadToolsList()

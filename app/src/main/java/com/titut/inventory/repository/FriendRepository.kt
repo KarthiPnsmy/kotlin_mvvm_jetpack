@@ -1,8 +1,11 @@
 package com.titut.inventory.repository
 
 import com.titut.inventory.db.dao.FriendDao
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FriendRepository(private val friendDao: FriendDao) {
+@Singleton
+class FriendRepository @Inject constructor(private val friendDao: FriendDao) {
 
     fun getFriends() = friendDao.getAllFriends()
 
