@@ -34,13 +34,16 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
     @Inject
     lateinit var testString: String
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        toolsViewModel = ViewModelProvider(this).get(ToolsViewModel::class.java)
-        friendsViewModel = ViewModelProvider(this).get(FriendsViewModel::class.java)
+        toolsViewModel = ViewModelProvider(this, viewModelFactory).get(ToolsViewModel::class.java)
+        friendsViewModel = ViewModelProvider(this, viewModelFactory).get(FriendsViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_tools, container, false)
         toolsRecyclerView = root.findViewById(R.id.rvToolsView)

@@ -17,6 +17,7 @@ import com.titut.inventory.ui.adapter.OnToolItemClickListener
 import com.titut.inventory.ui.friends.FriendsFragment.Companion.ARG_FRIEND_ID
 import com.titut.inventory.ui.tools.ToolsViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
+import javax.inject.Inject
 
 class DetailFragment : BaseFragment(), OnToolItemClickListener {
     private lateinit var toolsViewModel: ToolsViewModel
@@ -26,12 +27,15 @@ class DetailFragment : BaseFragment(), OnToolItemClickListener {
     private var selectedFriendId: Long = 0L
     private lateinit var selectedTool: ToolsOnLoan
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        toolsViewModel = ViewModelProvider(this).get(ToolsViewModel::class.java)
+        toolsViewModel = ViewModelProvider(this, viewModelFactory).get(ToolsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         detailRecyclerView = root.findViewById(R.id.rvDetailView)
 

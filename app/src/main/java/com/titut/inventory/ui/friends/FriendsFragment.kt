@@ -13,12 +13,16 @@ import com.titut.inventory.R
 import com.titut.inventory.db.entity.FriendsWithTools
 import com.titut.inventory.ui.adapter.FriendsAdapter
 import com.titut.inventory.ui.adapter.OnFriendItemClickListener
+import javax.inject.Inject
 
 class FriendsFragment : BaseFragment(), OnFriendItemClickListener {
 
     private lateinit var friendsViewModel: FriendsViewModel
     private lateinit var friendsRecyclerView: RecyclerView
     private lateinit var friendsAdapter: FriendsAdapter
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     companion object {
         const val ARG_FRIEND_ID: String = "friendId"
@@ -29,7 +33,7 @@ class FriendsFragment : BaseFragment(), OnFriendItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        friendsViewModel = ViewModelProvider(this).get(FriendsViewModel::class.java)
+        friendsViewModel = ViewModelProvider(this, viewModelFactory).get(FriendsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_friends, container, false)
         friendsRecyclerView = root.findViewById(R.id.rvFriendsView)
 
