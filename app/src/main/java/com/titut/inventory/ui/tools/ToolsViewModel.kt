@@ -9,6 +9,7 @@ import com.titut.inventory.repository.ToolRepository
 import kotlinx.coroutines.launch
 
 class ToolsViewModel(application: Application) : AndroidViewModel(application) {
+    
     private var toolsRepository: ToolRepository
 
     init {
