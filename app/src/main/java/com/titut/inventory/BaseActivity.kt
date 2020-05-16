@@ -2,6 +2,7 @@ package com.titut.inventory
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -13,7 +14,6 @@ abstract class BaseActivity: AppCompatActivity(), HasAndroidInjector {
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
-
     override fun androidInjector(): AndroidInjector<Any> {
         return androidInjector
     }
@@ -21,5 +21,7 @@ abstract class BaseActivity: AppCompatActivity(), HasAndroidInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
+
     }
 }

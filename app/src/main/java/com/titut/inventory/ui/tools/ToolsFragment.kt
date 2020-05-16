@@ -16,6 +16,7 @@ import com.titut.inventory.db.entity.ToolsWithFriends
 import com.titut.inventory.ui.adapter.OnItemClickListener
 import com.titut.inventory.ui.adapter.ToolsAdapter
 import com.titut.inventory.ui.friends.FriendsViewModel
+import javax.inject.Inject
 
 
 class ToolsFragment : BaseFragment(), OnItemClickListener {
@@ -30,6 +31,9 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
     private lateinit var selectedTool: ToolsWithFriends
     private lateinit var selectedFriend: Friend
 
+    @Inject
+    lateinit var testString: String
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +44,8 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
 
         val root = inflater.inflate(R.layout.fragment_tools, container, false)
         toolsRecyclerView = root.findViewById(R.id.rvToolsView)
+
+        println("@@@@ testString ToolsFragment = $testString")
 
         setupToolsList()
         loadToolsList()

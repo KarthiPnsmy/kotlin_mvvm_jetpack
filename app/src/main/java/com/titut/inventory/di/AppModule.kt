@@ -5,6 +5,7 @@ import dagger.Provides
 
 @Module
 class AppModule {
+
     @Provides
     fun provideString(): String {
         return "karthi"

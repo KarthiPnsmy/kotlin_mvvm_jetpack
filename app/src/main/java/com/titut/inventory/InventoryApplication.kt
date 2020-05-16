@@ -20,12 +20,9 @@ open class InventoryApplication : Application(), HasAndroidInjector {
             .application(this)
             .build()
             .inject(this)
-
-
     }
 
     override fun androidInjector(): AndroidInjector<Any> {
         return dispatchingAndroidInjector
     }
-
 }
