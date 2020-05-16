@@ -27,26 +27,31 @@ abstract class InventoryDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: InventoryDatabase? = null
 
-        fun getInstance(context: Context, scope: CoroutineScope): InventoryDatabase =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: buildDatabase(context, scope).also { INSTANCE = it }
+        fun getInstance(context: Context, coroutineScope: CoroutineScope): InventoryDatabase {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
             }
 
-        private fun buildDatabase(context: Context, scope: CoroutineScope) =
-            Room.databaseBuilder(
-                context.applicationContext,
-                InventoryDatabase::class.java, "inventory_database"
-            )
-                .addCallback(InventoryDatabaseCallback(scope))
-                .build()
+            synchronized(this) {
+                val instance = Room.databaseBuilder(context.applicationContext,
+                    InventoryDatabase::class.java,
+                    "inventory_database")
+                    .addCallback(InventoryDatabaseCallback(coroutineScope))
+                    .build()
+
+                INSTANCE = instance
+                return instance
+            }
+        }
     }
 
     private class InventoryDatabaseCallback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
-        override fun onOpen(db: SupportSQLiteDatabase) {
-            super.onOpen(db)
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
                     val toolDao = database.toolDao()
