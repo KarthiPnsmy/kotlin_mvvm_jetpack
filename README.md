@@ -1,6 +1,5 @@
 ## Inventory App
 
-This is a solution for assignment provided by Aleph Labs.
 
 1. This app follow MVVM architecture + Single activity architecture
 2. This app support from API level 21
