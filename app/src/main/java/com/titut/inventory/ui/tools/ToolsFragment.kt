@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.BaseFragment
 import com.titut.inventory.R
@@ -16,12 +15,11 @@ import com.titut.inventory.db.entity.ToolsWithFriends
 import com.titut.inventory.ui.adapter.OnItemClickListener
 import com.titut.inventory.ui.adapter.ToolsAdapter
 import com.titut.inventory.ui.friends.FriendsViewModel
+import org.koin.android.ext.android.inject
 
 
 class ToolsFragment : BaseFragment(), OnItemClickListener {
 
-    private lateinit var toolsViewModel: ToolsViewModel
-    private lateinit var friendsViewModel: FriendsViewModel
 
     private lateinit var toolsRecyclerView: RecyclerView
     private lateinit var toolsAdapter: ToolsAdapter
@@ -30,13 +28,14 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
     private lateinit var selectedTool: ToolsWithFriends
     private lateinit var selectedFriend: Friend
 
+    private val toolsViewModel: ToolsViewModel by inject()
+    private val friendsViewModel: FriendsViewModel by inject()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        toolsViewModel = ViewModelProvider(this).get(ToolsViewModel::class.java)
-        friendsViewModel = ViewModelProvider(this).get(FriendsViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_tools, container, false)
         toolsRecyclerView = root.findViewById(R.id.rvToolsView)

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.BaseFragment
@@ -13,12 +12,14 @@ import com.titut.inventory.R
 import com.titut.inventory.db.entity.FriendsWithTools
 import com.titut.inventory.ui.adapter.FriendsAdapter
 import com.titut.inventory.ui.adapter.OnFriendItemClickListener
+import org.koin.android.ext.android.inject
 
 class FriendsFragment : BaseFragment(), OnFriendItemClickListener {
 
-    private lateinit var friendsViewModel: FriendsViewModel
     private lateinit var friendsRecyclerView: RecyclerView
     private lateinit var friendsAdapter: FriendsAdapter
+
+    private val friendsViewModel:FriendsViewModel by inject()
 
     companion object {
         const val ARG_FRIEND_ID: String = "friendId"
@@ -29,14 +30,13 @@ class FriendsFragment : BaseFragment(), OnFriendItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        friendsViewModel = ViewModelProvider(this).get(FriendsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_friends, container, false)
         friendsRecyclerView = root.findViewById(R.id.rvFriendsView)
 
         setupFriendsList()
 
         friendsViewModel.getFriendsWithTools()
-            ?.observe(viewLifecycleOwner, Observer<List<FriendsWithTools>> { friendsWithTools ->
+            .observe(viewLifecycleOwner, Observer<List<FriendsWithTools>> { friendsWithTools ->
                 friendsAdapter.setFriends(friendsWithTools)
             })
 

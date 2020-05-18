@@ -1,5 +1,6 @@
 package com.titut.inventory.di
 
+import android.preference.PreferenceManager
 import com.titut.inventory.db.InventoryDatabase
 import com.titut.inventory.repository.FriendRepository
 import com.titut.inventory.repository.ToolRepository
@@ -13,7 +14,7 @@ import org.koin.dsl.module
 val dbModule = module {
     factory { CoroutineScope(Dispatchers.IO) }
 
-    single{
+    single {
         InventoryDatabase.getInstance(context = get(), coroutineScope = get())
     }
 
@@ -27,6 +28,6 @@ val repositoryModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { ToolsViewModel(get()) }
+    viewModel { ToolsViewModel(get(), get()) }
     viewModel { FriendsViewModel(get()) }
 }

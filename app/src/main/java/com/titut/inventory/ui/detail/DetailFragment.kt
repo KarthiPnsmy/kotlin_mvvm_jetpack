@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.titut.inventory.BaseFragment
 import com.titut.inventory.R
@@ -17,21 +16,21 @@ import com.titut.inventory.ui.adapter.OnToolItemClickListener
 import com.titut.inventory.ui.friends.FriendsFragment.Companion.ARG_FRIEND_ID
 import com.titut.inventory.ui.tools.ToolsViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
+import org.koin.android.ext.android.inject
 
 class DetailFragment : BaseFragment(), OnToolItemClickListener {
-    private lateinit var toolsViewModel: ToolsViewModel
-
     private lateinit var detailRecyclerView: RecyclerView
     private lateinit var detailAdapter: DetailAdapter
     private var selectedFriendId: Long = 0L
     private lateinit var selectedTool: ToolsOnLoan
+
+    private val toolsViewModel: ToolsViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        toolsViewModel = ViewModelProvider(this).get(ToolsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         detailRecyclerView = root.findViewById(R.id.rvDetailView)
 
