@@ -1,6 +1,7 @@
 package com.titut.inventory.ui.tools
 
 import android.app.AlertDialog
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,6 @@ import org.koin.android.ext.android.inject
 
 class ToolsFragment : BaseFragment(), OnItemClickListener {
 
-
     private lateinit var toolsRecyclerView: RecyclerView
     private lateinit var toolsAdapter: ToolsAdapter
     private lateinit var tools: List<ToolsWithFriends>
@@ -30,6 +30,7 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
 
     private val toolsViewModel: ToolsViewModel by inject()
     private val friendsViewModel: FriendsViewModel by inject()
+    private val sharedPreferences: SharedPreferences by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +43,11 @@ class ToolsFragment : BaseFragment(), OnItemClickListener {
 
         setupToolsList()
         loadToolsList()
+
+        //test
+        val editor = sharedPreferences.edit()
+        editor.putString("userName", "asdf")
+        editor.apply()
 
         return root
     }

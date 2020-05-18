@@ -1,6 +1,9 @@
 package com.titut.inventory.di
 
-import android.preference.PreferenceManager
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import com.titut.inventory.db.InventoryDatabase
 import com.titut.inventory.repository.FriendRepository
 import com.titut.inventory.repository.ToolRepository
@@ -31,3 +34,14 @@ val viewModelModule = module {
     viewModel { ToolsViewModel(get(), get()) }
     viewModel { FriendsViewModel(get()) }
 }
+
+val preferenceModule = module {
+    single {
+        provideSharedPreference(get())
+    }
+}
+
+private const val PREFERENCE_KEY = "com.titut.inventory.app_pref"
+
+private fun provideSharedPreference(application: Application): SharedPreferences =
+    application.getSharedPreferences(PREFERENCE_KEY, Context.MODE_PRIVATE)
