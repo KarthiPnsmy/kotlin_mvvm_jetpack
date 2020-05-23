@@ -1,19 +1,13 @@
-## Inventory App
+## Kotlin + MVVM + Jetpack + Dagger2/Koin
 
-1. This app follow MVVM architecture + Single activity architecture
-2. This app support from API level 21
-3. This app take leverage from Android architecture components such as LiveData, LifeCycle, Navigation Component, Room, View Model, and Coroutines
-4. In terms of business logic, this app uses Rooms Many to Many relation between entities(via @Relation, @Embedded, and @Relation) and custom queries  via Inner Join
+This is a simple experimental Android application developed to evaluate two major dependency framework in Android ecosystem namely **Dagger2** and **Koin**. This application also leverages from Jetpack architectural components such as *LiveData, LifeCycle, Navigation Component, Room, View Model, and Coroutines*.
 
-Sample Screens:
+Here are the details of DI implementation,
 
-![Screen1]("screens/screen1.png")
-![Screen2]("screens/screen2.png")
-![Screen3]("screens/screen3.png")
-![Screen4]("screens/screen4.png")
-![Screen5]("screens/screen5.png")
+1. [without_di](https://github.com/KarthiPnsmy/kotlin_mvvm_jetpack/tree/without_di) -> This branch has the source code without any dependency injection library.
+2. [master](https://github.com/KarthiPnsmy/kotlin_mvvm_jetpack/tree/master) -> In this branch dependency injection implemented using Dagger2
+3. [with_koin](https://github.com/KarthiPnsmy/kotlin_mvvm_jetpack/tree/with_koin) -> In this branch dependency injection implemented using Koin.
 
-### Todo
+May be comparing master and with_koin will give you an overview of complexity, implementation and developer friendliness of these two different dependency injection library.
 
-1. Dependency Injection
-2. Add more test coverage
+
